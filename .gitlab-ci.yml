@@ -16,7 +16,7 @@ variables:
   DEBIAN_IMAGE: "registry.gitlab.gnome.org/gnome/glib/debian-stable:v23"
   ALPINE_IMAGE: "registry.gitlab.gnome.org/gnome/glib/alpine:v7"
   MINGW_IMAGE: "registry.gitlab.gnome.org/gnome/glib/mingw:v39.5"
-  GOBJECT_INTROSPECTION_TAG: "1.80.1"
+  GOBJECT_INTROSPECTION_TAG: "1.82.0"
   MESON_TEST_TIMEOUT_MULTIPLIER: 4
   G_MESSAGES_DEBUG: all
   MESON_COMMON_OPTIONS: "--buildtype debug --wrap-mode=nodownload --fatal-meson-warnings"
