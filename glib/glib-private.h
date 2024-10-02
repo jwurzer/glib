@@ -35,6 +35,32 @@
  */
 #define G_SIGNEDNESS_OF(T) (((T) -1) <= 0)
 
+/*
+ * G_ATTRIBUTE_ALIGNED:
+ * @A: an integral expression
+ *
+ * Private macro to specify the required alignment in a declaration
+ */
+
+#if G_CXX_STD_CHECK_VERSION (11)
+#  define G_ATTRIBUTE_ALIGNED(a) alignas(a)
+#elif G_C_STD_CHECK_VERSION (23)
+#  include <stdalign.h>
+#  define G_ATTRIBUTE_ALIGNED(a) alignas(a)
+#elif G_C_STD_CHECK_VERSION (11)
+#  define G_ATTRIBUTE_ALIGNED(a) _Alignas(a)
+#else
+#  ifndef _MSC_VER
+#    if g_macro__has_attribute(aligned)
+#      define G_ATTRIBUTE_ALIGNED(a) __attribute__((aligned(a)))
+#    else
+#      error "This compiler does not support the aligned attribute"
+#    endif
+#  else
+#    define G_ATTRIBUTE_ALIGNED(a) __declspec(align(a))
+#  endif
+#endif
+
 /* gcc defines __SANITIZE_ADDRESS__, clang sets the address_sanitizer
  * feature flag.
  *
