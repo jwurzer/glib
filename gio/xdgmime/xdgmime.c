@@ -227,7 +227,9 @@ xdg_init_dirs (void)
   home = getenv ("HOME");
   xdg_data_dirs = getenv ("XDG_DATA_DIRS");
 
+  // if changes complete use original PREFIX place holder instead of hardcoded path
   if (xdg_data_dirs == NULL)
+    //xdg_data_dirs = "@""PREFIX@/share/:/usr/share/";
     xdg_data_dirs = "/Applications/PCManFM.app/Contents/Resources/share/:/usr/share/";
 
   /* Work out how many dirs we’re dealing with. */
