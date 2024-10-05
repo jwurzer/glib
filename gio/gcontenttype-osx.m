@@ -210,7 +210,8 @@ g_content_type_get_description_impl (const gchar *type)
   desc_str = UTTypeCopyDescription (str);
 
   CFRelease (str);
-  return create_cstr_from_cfstring_with_fallback (desc_str, "unknown");
+  //return create_cstr_from_cfstring_with_fallback (desc_str, "unknown");
+  return create_cstr_from_cfstring_with_fallback (desc_str, "unknownX");
 }
 
 /* <internal>
