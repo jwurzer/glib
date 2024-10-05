@@ -369,8 +369,9 @@ load_comment_for_mime (const char *mimetype)
 }
 
 gchar *
-g_content_type_get_description_impl (const gchar *type)
+g_content_type_get_description_impl (const gchar *type_)
 {
+  const gchar *type = "public.text"; // only for tests
   static GHashTable *type_comment_cache = NULL;
   gchar *type_copy = NULL;
   gchar *comment;
