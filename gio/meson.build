@@ -339,7 +339,6 @@ local_sources = files(
 
 platform_deps = []
 internal_deps = []
-appinfo_sources = []
 contenttype_sources = []
 portal_sources = []
 unix_sources = []
@@ -391,8 +390,8 @@ if host_system != 'windows'
 
   if glib_have_cocoa
     settings_sources += files('gnextstepsettingsbackend.m')
-    contenttype_sources += files('gosxcontenttype.m')
-    appinfo_sources += files('gosxappinfo.m')
+    contenttype_sources += files('gcontenttype-osx.m')
+    unix_sources += files('gosxappinfo.m')
     framework_dep = dependency('appleframeworks', modules : ['Foundation', 'CoreFoundation', 'AppKit'])
     platform_deps += [framework_dep]
     if glib_have_os_x_9_or_later
@@ -400,8 +399,8 @@ if host_system != 'windows'
     endif
     application_headers += files('gosxappinfo.h')
   else
-    contenttype_sources += files('gcontenttype.c')
-    appinfo_sources += files('gdesktopappinfo.c')
+    contenttype_sources += files('gcontenttype-fdo.c')
+    unix_sources += files('gdesktopappinfo.c')
     gio_unix_include_headers += files('gdesktopappinfo.h')
     launch_desktop_sources = files('gio-launch-desktop.c')
 
@@ -431,7 +430,7 @@ if host_system != 'windows'
     )
   endif
 else
-  appinfo_sources += files('gwin32appinfo.c')
+  win32_sources += files('gwin32appinfo.c')
   contenttype_sources += files('gcontenttype-win32.c')
   platform_deps += [cc.find_library('shlwapi'),
                     cc.find_library('dnsapi'),
@@ -472,7 +471,7 @@ else
   install_headers(gio_win32_include_headers, subdir : 'gio-win32-2.0/gio')
 endif
 
-gio_sources = files(
+gio_base_sources = files(
   'gappinfo.c',
   'gasynchelper.c',
   'gasyncinitable.c',
@@ -482,6 +481,7 @@ gio_sources = files(
   'gbytesicon.c',
   'gcancellable.c',
   'gcharsetconverter.c',
+  'gcontenttype.c',
   'gcontextspecificgroup.c',
   'gconverter.c',
   'gconverterinputstream.c',
@@ -603,11 +603,12 @@ gio_sources = files(
   'gliststore.c',
 )
 
+gio_sources = gio_base_sources
+
 if glib_build_shared
   gio_sources += files ('../glib/gtrace.c')
 endif
 
-gio_sources += appinfo_sources
 gio_sources += contenttype_sources
 gio_sources += gdbus_daemon_sources
 gio_sources += unix_sources
