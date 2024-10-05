@@ -192,10 +192,7 @@ g_content_type_get_description (const gchar *type)
 {
   g_return_val_if_fail (type != NULL, NULL);
 
-  GString* detail = g_string_sized_new(128);
-  g_string_append_printf(detail, "*%s*", type);
-  return g_string_free(detail, FALSE);
-  //return g_content_type_get_description_impl (type);
+  return g_content_type_get_description_impl (type);
 }
 
 /**
